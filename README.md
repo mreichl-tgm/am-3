@@ -6,4 +6,8 @@ I believe that scientific knowledge should available for everyone.\
 So here is everything I have been working on for everyone to use.
 
 Sincerely,\
-Markus
+Markus [@re1](https://github.com/re1)
+
+```
+- mail:   markus@re1.at
+- web:           re1.at
