@@ -1,0 +1,320 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+H24 - Kuvendiskussion und Nullstellensuche
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Angaben und Imports
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir nutzen eine Gleichung nach Angabe mit 2 Ableitungen.
+Zusätzlich werden 2 Blöcke aus unserem Portfolio kopiert, 
+das Regula Falsi und das Intervallverfahren.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: (x^2 - 1)*exp(-x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1: diff(fx, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a2: diff(fx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Regula Falsi
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regulafalsi(a, b, f, e, max):=block
+(
+    xn: a - subst(a, x, f) * (b-a)/(subst(b, x, f) - subst(a, x, f)),
+    for i:1 thru max do 
+    (
+        /* Wenn f(x) > 0 wird b ersetzt */
+        if (subst(xn, x, f) > 0) then
+        (
+            xn: float(a - subst(a, x, f) * (xn-a)/(subst(xn, x, f) - subst(a, x, f)))
+        ),
+        /* Wenn f(x) < 0 wird a ersetzt */
+        if (subst(xn, x, f) < 0) then
+        (
+            xn: float(xn - subst(xn, x, f) * (b-xn)/(subst(b, x, f) - subst(xn, x, f)))
+        ),
+        /* Liefert die Nullstelle und die Iteration wenn gefunden */            
+        if (subst(xn, x, f) = 0) then return(["ns", i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bisection
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisection(a, b, f, e, max):=block
+(
+    xn: (a + b)/2,
+    for i:1 thru max do
+    (
+        /* Wenn f(xn) < 0 wird der negative Wert ersetzt */
+        if (subst(xn, x, f) < 0) then
+        (
+            xn: float((xn + b)/2)
+        ),
+        /* Wenn f(xn) > 0 wird der positive Wert ersetzt */
+        if (subst(xn, x, f) > 0) then
+        (
+            xn: float((a + xn)/2)
+        ),
+        /* Wenn f(xn) = 0 wird f(xn) zurückgeliefert */
+        if (subst(xn, x, f) = 0) then return([i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Vorbereitung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unsere Ziele sind:
+- Nullstellen mit Regula Falsi
+- Extremwerte mit Bisection
+- Wendepunkte mit Regula Falsi
+
+- Graph mit Funktion, Nullstellen, Extremwerten und Wendepunkten + Wendetangente
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zuerst verschaffen wir uns mit einer Plot eine Übersicht
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([fx, fx_a1, fx_a2], [x, -2, 6], [y, -2, 2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Nullstellen
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Als erstes berechnen wir uns mittels Regula Falsi die Nullstellen der Funktion.
+Dies machen wir über einen Block aus dem Portfolio, indem wir mögliche Werte aus dem Plot
+ablesen. Wir sehen hier 2 Möglichkeiten zwischen [-1.5 und 0.5] und [0.5 und 1]
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+-1.5 und 0.5
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regulafalsi(-1.5, 0.5, fx, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ns1: [1.0, 0];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+0.5 und 1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regulafalsi(0.5, 1, fx, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ns2: [-1.0, 0];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir erkennen somit was aus dem Plot heraus bereits vermutet wurde,
+die Nullstellen liegen nahe an + und - 1.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Extremwerte
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Extremwerte finden wir indem wir die erste Ableitung gleich 0 setzen,
+also die Nullstellen finden. Diesmal verwenden wir unser Bisectionsverfahren.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+In unserer Grafik sehen wir, dass die Nullstellen der ersten Ableiung zwischen
+[-1 und 0] und [2 und 3]
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+-1 und 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+e1y: bisection(-1, 0, fx_a1, 1, 1000);;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+e1: float([e1y[3], subst(e1y[3], x, fx)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+2 und 3
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+e2y: bisection(1.5, 2.5, fx_a1, 1, 1000);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+e2: float([e2y[3], subst(e2y[3], x, fx)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie man sieht bekommen wir -0.6* und 3.0 als Extremwerte,
+was im für uns interessanten Bereich durchaus gut erkennbar ist.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Wendepunkte
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zuletzt suchen wir durch die Nullstelle der zweiten Ableitung den Wendepunkt.
+Die Nullstelle dieser liegt nach Grafik ca. zwischen 0 und 1,
+dies Rechnen wir uns wieder mittels Regula Falsi.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w1y: regulafalsi(0, 1, fx_a2, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w2y: regulafalsi(2, 3, fx_a2, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w1: float([w1y[3], subst(w1y[3], x, fx)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w2: float([w2y[3], subst(w2y[3], x, fx)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Hier berechnen wir auch noch die Wendetangenten
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w1_k: subst(w1[1], x, fx_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w2_k: subst(w2[1], x, fx_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w1_P: subst(w1[1], x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w2_p: subst(w2[1], x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w1_d: rhs(solve(w1_P = w1_k*w1[1]+d, d)[1]), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w2_d: rhs(solve(w2_p = w2_k*w2[1]+d, d)[1]), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w1_t: w1_k*x+w1_d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w2_t: w2_k*x+w2_d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Grafisch
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([fx, fx_a1, fx_a2, w1_t, w2_t, [discrete, [ns1, ns2]], [discrete, [e1, e2]], [discrete, [w1, w2]]], 
+    [x, -2, 6], 
+   [y, -2, 4], 
+    [style, [lines], [lines], [lines], [lines], [lines], [points, 1,black,1],[points, 1,red,1],[points, 1,green,1]],
+    [legend, "f(x)", "f'(x)", "f''(x)", "Wendetangente 1", "Wendetangente 2", "Nullstellen", "Extremwerte", "Wendepunkte"]);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

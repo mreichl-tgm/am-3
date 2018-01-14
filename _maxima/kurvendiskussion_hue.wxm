@@ -1,0 +1,309 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Kurvendiskussion
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+4.93
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt: -0.3*t^4 + 4.4*t^3 - 14.1*t^2 - 6.7*t + 80;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt_a1: diff(Kt,t,1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt_a2: diff(Kt,t,2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt_a3: diff(Kt,t,3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Personen im Geschäft um 9:00
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Seit 0 Stunden offen -> t = 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt_0: subst(0, t, Kt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es befinden sich 80 Kunden zur Eröffnung im Haus
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Differenz zum Zeitpunkt 10:00
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Seit 1 Stunden offen -> t = 1
+Differenz zum ersten Zeitpunkt -> Kt_1 - Kt_0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt_1: subst(1, t, Kt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt_1 - Kt_0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+17 Leute haben den Raum verlassen (0.7 Leute existieren nicht)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Änderung im Mittel
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Gleichung aus dem Unterricht: (f(x) - f(y)):(x-y)
+10Uhr: Kt_1
+15Uhr: Kt_6
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt_6: subst(6, t, Kt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+(Kt_1 - Kt_6)/(1-6);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Änderung im Mittel ist 6.1 -> ca. 6 Leute
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Wenigsten Kunden
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Hier brauchen wir Extremwerte, speziell das Minimum.
+Dieses bekommen wir aus der erste Ableitung indem wir nach 0 lösen
+und das Ergebnis in die Funktion einsetzen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve([Kt_a1 = 0], t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+In dem Fall bekommen wir keine sonderlich guten Ergebnisse, 
+besser wird es durch numerisches Nullstellensuchen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kt_a1_ns: allroots(Kt_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ein negativer Wert ist nicht möglich daher kommen nur 2 und 3 infrage.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(Kt_a1_ns[2], t, Kt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unser Minimum sind also 27 Leute (gerundet) um etwa 12:00 Uhr
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Meiste Kunden
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun fast selbiges nur setzen wir die andere Nullstelle im Bereich ein.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(Kt_a1_ns[3], t, Kt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unser Maximum sind also 148 Leute (gerundet) um etwa 17:00 Uhr
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Grafische Darstellung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Funktion, sowie die erste, zweite und dritte Ableitung werden hier geplottet.
+Wichtig zur optischen Beschreibung ist jedoch eigentlich nur die Funktion.
+Wir argumentieren jetzt jedoch erstmal zur zweiten Ableitung.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Kt, Kt_a1 ,Kt_a2, Kt_a3], [t, 0, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Man sieht die stärkste Änderung sieht man natürlich zwischen den Nullstellen,
+also zwischen Beginn 9:00, Minimum 12:00 und Maximum 17:00 Uhr.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Bereich über 100
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Optisch von 15:00 bis 18:00 Uhr.
+Um dies zu berechnen können wir die gesamte Funktion -100 Rechnen,
+dadurch verschieben sich die 100er Stellen auf 0 und wir können danach suchen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+allroots(Kt - 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir erhalten nun 2 verwendbare Ergebnisse welche unsere Zeiten sein sollten.
+Sie entsprechen unserer Schätzung von 15:00-18:00 Uhr.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+4.105
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die folgende Gleichung beschreibt die Dauer eines Wirkstoffes im Blut.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Mt: (1.5 * t)/(t^2 + 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Mt_a1: diff(Mt, t, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Grafische Darstellung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mit wxplot wird die Funktion grafisch dargestellt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(Mt, [t, 0, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Maximum
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie im vorherigen Beispiel können wir die erste Ableitung nach 0 lösen
+um an die Grenzwerte zu kommen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(Mt_a1 = 0, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1, t, Mt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir bekommen 2 Ergebnisse, da wir bei 0 beginnen trifft nur der Positive zu und
+wir erreichen unser Maximum bei 1 mit 0.75 ml
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Wird der Wirkstoff abgebaut?
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Diese Frage kann man auf 2 Wege beantworten, zum einen sieht man, 
+dass sich die Funktion "annähernd an 0 verhält". 
+Dies ist natürlich nicht sonderlich Mathematisch, 
+aber wir können versuchen eine Nullstelle der Funktion zu finden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(Mt = 0, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie man sieht liegt die einzige Nullstelle am Ursprung,
+die vorher durchgeführte Suche nach Grenzwerten gab auch nur einen positiven Wert.
+Man kann daher feststellen, dass die Funktion nicht mehr 0 wird sondern sich nur nähert.
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

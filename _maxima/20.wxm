@@ -1,0 +1,139 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+H21 Portfolio - Numerische Verfahren
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Funktionen und Punkte werden vordefiniert. Die Funktion ist stetig und die Punkte haben unterschiedliche Vorzeichen.
+Eine Hilfsmethode testet ob die letzte Evaluation der Funktion im Bereich "e" liegt oder der Maximalwert erreicht ist.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+checkEpsilon(e, max, fn_xn):=block
+(
+    if (fn_xn < -e) then return([-e, xn])
+    else if (fn_xn < e) then return([e, xn])
+    else return([max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f: x^2 - 1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1: 2*x;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: 5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b: -5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Regula Falsi
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+- Infotext
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regulafalsi(a, b, f, e, max):=block
+(
+    xn: (a*subst(b, x, f) - b*subst(a, x, f)) / subst(b, x, f) * subst(a, x, f),
+    for i:1 thru max do 
+    (
+        xn: (xn*subst(b, x, f) - b*subst(xn, x, f))/subst(b, x, f) * subst(xn, x, f),
+        if(subst(xn, x, f)=0) then return([i, xn])
+    ),
+    checkEpsilon(e, max, subst(xn, x, f))
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r1: regulafalsi(a, b, f, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Bisection
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+- Infotext
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisection(a, b, f, e, max):=block
+(
+    xn: (a + b)/2,
+    for i:1 thru max do
+    (
+        if (sig(subst(xn, x, f))=sig(subst(a, x, f))) then xn: (xn + b)/2
+        else xn: (a + xn)/2,
+        if (subst(xn, x, f)=0) then return([i, xn])
+    ),
+    checkEpsilon(e, max, subst(xn, x, f))
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b1: bisection(a, b, f, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Newton
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+- Infotext
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+newton(a, f, f1, e, max):=block
+(
+    xn: a - subst(a, x, f)/subst(a, x, f1),
+    for i:1 thru max do 
+    (
+        xn: xn - subst(xn, x, f)/subst(xn, x, f1),
+        if (subst(xn, x, f)=0) then return([i, xn])
+    ),
+    checkEpsilon(e, max, subst(xn, x, f))
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+n1: newton(a, f, f1, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

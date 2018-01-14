@@ -1,0 +1,172 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S37 Integralrechnung Übungen
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+6.34)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: -1/16*x^2+2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r: 2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nullstellen der Funktion bilden die Grenzen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_ns: solve(0 = fx, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Das Integral zwischen diesen bildet das halbe Diadem
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_int: integrate(fx, x, rhs(fx_ns[1]), rhs(fx_ns[2]));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Az: r^2*%pi;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Ag: 2*fx_int;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Fläche mit Blattgold ist die Gesamtfläche - dem Zirkon
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Ad: Ag - Az, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Prozentanteil jenes ist die Proportion zur Gesamtfläche
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Az / Ag * 100, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ad ist bereits in Quadratzentimeter, daher reicht eine simple Multiplikation
++ das Zirkon
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Ad * 6.89 + 3440;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beide Flächen werden um einen Prozentsatz x vergrößert.
+Wir können die Auswirkung anhand der Gleichung Ag = Ad + Az sehen, wenn wir jeden der Werte mit 1.2 (10% an beiden Seite) multiplizieren.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Ag * x = Ad * x + Az * x, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+6.35)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: -1/16*x^4+3/2*x^2+x+1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_ns: allroots(fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_ns1: rhs(fx_ns[3]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_ns2: rhs(fx_ns[4]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_int: integrate(fx, x, fx_ns1, fx_ns2), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_mid: rhs(allroots(fx_int / 2 = integrate(fx, x, fx_ns1, b))[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

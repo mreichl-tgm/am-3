@@ -1,0 +1,114 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S14 Winkelfunktionen
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Vereinfache
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Grad zu Radianten
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1_0: sin(%pi / 6 + a) * cos (%pi / 3 + a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1_0: trigreduce(glg1_0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Brüche
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1_1: (sin(x-y)*sin(x+y))/(sin(x)^2-sin(y)^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1_1: trigreduce(glg1_1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Cosinus
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1_2: cos(%pi/4 - x) - cos(%pi / 4 + x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1_2: trigexpand(glg1_2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+End
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1_3: (sin(x-y)+sin(x+y))/(-(cos(x-y)+cos(x+y)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1_3: trigreduce(trigexpand(glg1_3));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Vergleiche von Zeichnungen
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Sinus * Exp
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y2_0_0: sin(x);
+y2_0_1: 2 * sin(x);
+y2_0_2: 0.3 * sin(x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([y2_0_0, y2_0_1, y2_0_2], [x,-5,5], [y, -5, 5], grid2d, [axes, solid]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es ändern sich jeweils die Maximalwerte je nach Exponenten, 
+Exponent >1 = höherer Maximalwert
+Exponent <1 = kleiner Maximalwert
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Sinus + Summand
+   [wxMaxima: subsect end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,102 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S27 - Buch Nr.: 4.28
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Fläche besteht aus eine Halbkreis und einem Rechteck.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+A(Halbkreis) = (r^2*%pi)/2
+A(Rechteck) = a*b
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Breite des Rechtecks ist gleich dem Durchmesser der Halbkreises,
+angepasst (radius=x, höhe=y) heißt das:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A_base: ((x)^2*%pi)/2 + 2*x*y;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+U_base: (2*x*%pi/2) + (2*x + 2*y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Aus unseren Nebenangaben wissen wir, dass der maximale Umfang 12 ist.
+Dies können wir einsetzen:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y1: rhs(expand(solve(12 = U_base, y))[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A_tox: subst(y1, y, A_base);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Um den Maximalwert zu erhalten brauchen wir nun die erste Ableitung.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A_tox_a1: diff(A_tox, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+x1: rhs(float(solve(A_tox_a1 = 0, x))[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zum Einsetzen in die Umfangsformel mit maximalem Umfang können wir gleich die auf
+y umgeformte Formel zurückgreifen, dazu bekommen wir:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y_max: float(subst(x1, x, y1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Bonus: 4.53
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir haben einige Angaben mit welchen wir das maximale Blickfeld von einer Tribüne 
+berechnen sollen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_laenge: 105;
+t_anfang: 5;
+t_winkel: 20;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Angaben in Meter
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

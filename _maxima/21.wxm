@@ -1,0 +1,318 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+H21 Portfolio - Numerische Verfahren
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Als Ausgang verwende ich eine stetige Funktion aus dem Lehrbuch mit Ableitung 
+und 2 Punkte welche sicher auf dieser liegen und unterschiedliche Vorzeichen haben.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f: -0.5*x^2+5.5*x+10.5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_a1: diff(f, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: 10;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b: -10;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+start_points: [[a, 0], [b, 0], [a, subst(a, x, f)], [b, subst(b, x, f)]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([f, f_a1], [x, -20, 20]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Regula Falsi
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Erklärung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Regula Falsi ist eine Methode zur Nullstellensuche. 
+Man benötigt zur Durchführung 2 Punkte mit unterschiedlichem Vorzeichen.
+Aus den y-Werten dieser Punkte kann man eine Gerade bilden welche die x-Achse schneidet,
+dieser Schnittpunkt wird unser x1 (iterativ xn).
+Ist der Funktionswert des Schnittpunkts negativ, 
+ersetzen wir den zuerst negativen Punkt durch den neuen und lösen erneut.
+Diese Vorgehensweise wird so lange ausgeführt wie nötig.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Block
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regulafalsi(a, b, f, e, max):=block
+(
+    xn: a - subst(a, x, f) * (b-a)/(subst(b, x, f) - subst(a, x, f)),
+    for i:1 thru max do 
+    (
+        /* Wenn f(x) > 0 wird b ersetzt */
+        if (subst(xn, x, f) > 0) then
+        (
+            xn: float(a - subst(a, x, f) * (xn-a)/(subst(xn, x, f) - subst(a, x, f)))
+        ),
+        /* Wenn f(x) < 0 wird a ersetzt */
+        if (subst(xn, x, f) < 0) then
+        (
+            xn: float(xn - subst(xn, x, f) * (b-xn)/(subst(b, x, f) - subst(xn, x, f)))
+        ),
+        /* Liefert die Nullstelle und die Iteration wenn gefunden */            
+        if (subst(xn, x, f) = 0) then return(["ns", i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+In diesem Beispiel wird die Funktion f mit den Punkten a und b mit e=1
+über 100 Durchgänge getestet.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r1: regulafalsi(a, b, f, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Nullstelle wurde zwar nicht genau bestimmt, 
+liegt jedoch nach 100 durchgängen im Bereich e.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Grafisch
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s1: [[a, subst(a, x, f)], [b, subst(b, x, f)]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([f, [discrete, s1]], [x, -20, 20]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Bisection
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Erklärung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Bisektion funktioniert nach ziemlich demselben Prinzip wie der Mensch sucht.
+Man geht ungefähr an die Stelle die man haben will und wenn diese vor der gesuchten
+liegt macht man hinten weiter, wenn sie dahinter liegt vorne.
+Für dieses Verfahren braucht man wieder 2 Punkte unterschiedlichen Vorzeichens.
+Erst wird die Mitte dieser gesucht um den ersten möglichen Wert zu erhalten (hier xn).
+Ist f(xn) < 0 (also negativ) wird der zuvor negative Wert ersetzt, 
+ist f(xn) > 0 geht es in die andere Richtung.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Block
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisection(a, b, f, e, max):=block
+(
+    xn: (a + b)/2,
+    for i:1 thru max do
+    (
+        /* Wenn f(xn) < 0 wird der negative Wert ersetzt */
+        if (subst(xn, x, f) < 0) then
+        (
+            xn: float((xn + b)/2)
+        ),
+        /* Wenn f(xn) > 0 wird der positive Wert ersetzt */
+        if (subst(xn, x, f) > 0) then
+        (
+            xn: float((a + xn)/2)
+        ),
+        /* Wenn f(xn) = 0 wird f(xn) zurückgeliefert */
+        if (subst(xn, x, f) = 0) then return([i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b1: bisection(a, b, f, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ähnlich wie oben, kleiner e nach 100 Durchläufen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Grafisch
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+g1: [[a, 0], [a, subst(a, x, f)]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([f, [discrete, g1]], [x, -20, 20]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Newton
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Erklärung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Entgegen der Regula Falsi Methode werden hier Tangenten statt Sekanten verwendet,
+um die Nullstelle zu finden.
+Man benötigt die Funktion + die erste Ableitung dieser, sowie einen Punkt (a). 
+Aus dem Quotienten dieser subtrahiert vom Startwert kann man dann den Schnittpunkt
+der Tangete an f(a) mit 0 berechnen, bei uns xn. 
+Dies funktioniert über das Steigungsdreieck, welches aus der Geraden von a zu f(a),
+der Tangente und der x-Achse entsteht.
+So kann man weiter vorgehen, indem man xn statt x0 einsetzt wie nötig.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Block
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+newton(x0, f, f1, e, max):=block
+(
+    xn: x0 - subst(x0, x, f)/subst(x0, x, f_a1),
+    for i:1 thru max do 
+    (
+        /* xn wird eingesetzt, wenn f(xn) = 0 ist wird xn zurückgeliefert */
+        xn: float(xn - subst(x0, x, f)/subst(x0, x, f_a1)),
+        if (subst(xn, x, f) = 0) then return(["ns", i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+n1: newton(a, f, f1, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Diesmal etwas anders, auch im Bereich e jedoch von oben.
+Vermutlich ist die Ursache, dass nur ein Punkt gegeben ist.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Grafisch
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k: subst(a, x, f_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+P: subst(a, x, f);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+d: solve(P = k*a+d, d);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1: k*x+rhs(d[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([f, t1], [x, -20, 20]);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

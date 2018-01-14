@@ -1,0 +1,200 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+H11 Quadratische Gleichungen
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Gleichungen, Funktionen, 2D-Graphen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Sätze von Vieta
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Symbolisches Lösen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vieta_0: x1 + x2 = -p;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+vieta_1: x1 * x2 = q;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1_0: x^2 + p*x + q = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1_1: a*x^2 + b*x + c = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1_0: solve(glg1_0, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1_1: solve(glg1_1, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die beiden Lösungen entsprechen symbolisch der "kleinen Lösungsformel".
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Summieren
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1_2: rhs(loes1_0[1]) + rhs(loes1_0[2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Multiplizieren
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1_3: rhs(loes1_0[1]) * rhs(loes1_0[2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Faktorisieren
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+factor(glg1_0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Tut nichts, hab aber auch nichts besseres gefunden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Funktion durch Nullgleichung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Lösung und grafische Darstellung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg2_0: 1/(2+x) + 1/(4+x) = 1/(1+x) + 1/(10+x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes2_0: solve(glg2_0, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([rhs(loes2_0[1]), rhs(loes2_0[2])], [x, -10, 10], [y, -10, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Gleichung und Grafik
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg2_1: f(x) = 1/(2+x) + 1/(4+x) - 1/(1+x) - 1/(10+x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([rhs(glg2_1), rhs(loes2_0[1]), rhs(loes2_0[2])], [x, -10, 10], [y, -10, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Leider wenig zu sehen da die blaue Funktion sehr groß wird
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Schnittpunkte
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([rhs(glg2_1), rhs(loes2_0[1]), rhs(loes2_0[2]), rhs(y=0.5*x+2)], [x, -10, 10], [y, -10, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Finde die Funktion
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Funktion A
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([(1+x)^2 + 1], [x, -3, 3], [y, -3, 5],[box, false], [grid2d, true]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+(x + n)² verschiebt nach links, + n verschiebt nach oben
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Funktion B
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([x^2 - 1.5], [x, -3, 3], [y, -3, 5],[box, false], [grid2d, true]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Musste nur den summanden bei x² entfernen und den Abstand nach unten setzen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Funktion C
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([(x-1)^2 - 1], [x, -3, 3], [y, -3, 5],[box, false], [grid2d, true]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Summand neben x bei x² ist nun 1
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

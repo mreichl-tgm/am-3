@@ -1,0 +1,108 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Simpsonregel
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Simpsonregel verwendet den keplerschen Formalismus und wendet diesen in Teilbereichen an, 
+welche dann wiederum aufsummiert werden können.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Angabe
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir verwenden die Angaben aus den letzten Aufgaben weiter:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: log(x)+2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: 2;
+b: 5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Erklärung + Grafik
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Grafik
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ga: [[a, subst(a, x, fx)], [a, 0]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gb: [[b, subst(b, x, fx)], [b, 0]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gab2: [[(a+b)/2, subst((a+b)/2, x, fx)], [(a+b)/2, 0]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+    [fx, [discrete, ga], [discrete, gb], [discrete, gab2]], [x, 1, 6], [y, 2, 4],
+    [legend, "f(x)", "a", "b", "(a+b)/2"]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Block
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+In der Simpson Funktion wird zusätzlich eine Kepler Funktion deklaiert um unabhängig auszuführen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Definition
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+simpson(fx, a, b, nmax):=block(
+    kepler(fx, a, b):= block((b-a)/6*(subst(a, x, fx) + 4*subst((a+b)/2, x, fx) + subst(b, x, fx))),
+    sum(kepler(fx, a + (n-1)*(b-a)/nmax, a + n*(b-a)/nmax) , n, 1, nmax)
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie wir sehen erhalten wir einen deutlichen numerischen Wert:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+simpson(fx, a, b, 10), numer;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,132 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Numerische Integrationsverfahren
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Vorarbeit:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1x: log(x)+2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a1: 2;
+b1: 5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Obersumme
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Erklärung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Obersumme nähert sich dem Flächeninhalt eines Bereichs 
+unter einer Funktion, über der x-Achse an. 
+Dies geschieht über die Bildung von Rechtecken AUSSERHALB des Funktionsgraphen.
+Die Obersumme wird durch folgende Formel beschrieben:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'An = (a-b)/n*sum(f(a+i/n*(a-b)), i, 1, n);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([f1x], [x, 0, 10], [y, 0, 5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Block
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+obersumme(f, a, b, n):= block
+(
+    float((a-b)/n*sum(subst((a+i*(a-b)/n), x, f), i, 1, n))
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_os: obersumme(f1x, a1, b1, 5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Untersumme
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Erklärung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Entgegen der Obersumme wird hier die Fläche 
+mit Rechtecken INNERHALB der Funktion gebildet.
+Die Untersumme wird durch folgende Formel beschrieben:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'An = (a-b)/n*sum(f(a+i/n*(a-b)), i, 0, n-1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Block
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+untersumme(f, a, b, n):= block
+(
+    float((a-b)/n*sum(subst((a+i*(a-b)/n), x, f), i, 0, n-1))
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_us: untersumme(f1x, a1, b1, 5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Interpretation
+   [wxMaxima: section end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

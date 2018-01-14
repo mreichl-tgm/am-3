@@ -1,0 +1,262 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+AM-SA-3: 31.03.2016
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Näherungsverfahren
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: subsect start ]
+Regula Falsi
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Wir verwenden den Block aus dem letzten Portfolio aufbauend weiter:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+regulafalsi(a, b, f, e, max):=block
+(
+    xn: a - subst(a, x, f) * (b-a)/(subst(b, x, f) - subst(a, x, f)),
+    for i:1 thru max do 
+    (
+        /* Wenn f(x) > 0 wird b ersetzt */
+        if (subst(xn, x, f) > 0) then
+        (
+            xn: float(a - subst(a, x, f) * (xn-a)/(subst(xn, x, f) - subst(a, x, f)))
+        ),
+        /* Wenn f(x) < 0 wird a ersetzt */
+        if (subst(xn, x, f) < 0) then
+        (
+            xn: float(xn - subst(xn, x, f) * (b-xn)/(subst(b, x, f) - subst(xn, x, f)))
+        ),
+        /* Liefert die Nullstelle und die Iteration wenn gefunden */            
+        if (subst(xn, x, f) = 0) then return(["ns", i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Bisection
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Wir verwenden den Block aus dem letzten Portfolio aufbauend weiter:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+bisection(a, b, f, e, max):=block
+(
+    xn: (a + b)/2,
+    for i:1 thru max do
+    (
+        /* Wenn f(xn) < 0 wird der negative Wert ersetzt */
+        if (subst(xn, x, f) < 0) then
+        (
+            xn: float((xn + b)/2)
+      ),
+        /* Wenn f(xn) > 0 wird der positive Wert ersetzt */
+        if (subst(xn, x, f) > 0) then
+        (
+            xn: float((a + xn)/2)
+        ),
+        /* Wenn f(xn) = 0 wird f(xn) zurückgeliefert */
+        if (subst(xn, x, f) = 0) then return([i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Newton
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Wir verwenden den Block aus dem letzten Portfolio aufbauend weiter:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+newton(x0, f, f_a1, e, max):=block
+(
+    xn: x0 - subst(x0, x, f)/subst(x0, x, f_a1),
+    for i:1 thru max do 
+    (
+        /* xn wird eingesetzt, wenn f(xn) = 0 ist wird xn zurückgeliefert */
+        xn: xn - subst(x0, x, f)/subst(x0, x, f_a1),
+        if (subst(xn, x, f) = 0) then return(["ns", i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Praktischer Teil (a)
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: comment start ]
+Wir verwenden die Volumensformel und setzen 0.275l in m³ umgewandelt als y ein.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+aV: 275 = 2*%pi*r^2*h;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+aV_h: solve(aV, h);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Wir wollen eine minimale Oberfläche haben, also aO' = 0. 
+Dazu basteln wir uns die Oberflächenformel und setzen ein.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+aO: h*2*%pi*r;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+aO_V: subst(aV_h, aO);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+aO_V_a1: diff(aO_V, r, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Von dieser brauchen wir nun die Nullstelle, dies geht über Solve, find_roots oder all_roos.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(aO_V_a1 = 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Praktischer Teil (b)
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: comment start ]
+Kostenfunktion hat dritten, Preisfunktion zweiten Grad
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+bKx: a*x^3+b*x^2+c*x+d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+bKx_a1: diff(bKx, x, 1);
+bKx_a2: diff(bKx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+bPx: a*x^2+b*x+c;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+bPx_a1: diff(bPx, x, 1);
+bPx_a2: diff(bPx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+K(x)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+K(x) hat Fixkosten  -> d = 120 000
+2 Extrempunkte      -> f'(40) = 0, f'(560) = 0
+1 Wednepunkt        -> f''(200) = 0
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+bKx: subst(120000, d, bKx);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+bK_e1: 0 = subst(40, x, bKx_a1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+bK_e2: 0 = subst(560, x, bKx_a1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+bk_w1: 0 = subst(200, x, bKx_a2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+P(x)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Nullstelle  -> f(980) = 0
+Höchstpreis -> f'(425) = 0
+
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Praktischer Teil (b) - Kurvendiskussion
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kx: x^3/300-2*x^2+224/3*x+120000;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Kx_a1: diff(Kx, x, 1);
+Kx_a2: diff(Kx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Px: -0.03*x^2+25.5*x+3822.0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Px_a1: diff(Px, x, 1);
+Px_a2: diff(Px, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([Kx, Kx_a1, Kx_a2, Px, Px_a1, Px_a2], [x, 0, 1000], [y, -10000, 200000]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisection(300, 500, Kx, 1, 100);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

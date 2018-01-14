@@ -1,0 +1,530 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Kurvendiskussionen2
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+4.140
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Polynomfunktion 3ten Grades
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: a*x^3+b*x^2+c*x+d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1: diff(fx, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a2: diff(fx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Extrempunkte E1(0|0), E2(4|4)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die beiden Extremwerte können wir nutzen um Teile der Gleichungen zu bestimmen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_e1: 0 = subst(0, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: subst(0, d, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_e2: 4 = subst(4, x , fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ich simplifiziere hier ein wenig für ein besseres Ergebnis
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_e2: ratsimp(fx_e2/4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Extrempunkt E(0|0), Wendepunkt W(1/3)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wendepunkt kann wieder eingesetzt werden
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_w1: 3 = subst(1, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Sattelpunkt S(1/4), Koeffizient x^3 = 1
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Als auch der Sattelpunkt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: subst(1, a, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s1: 4 = subst(1, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Kurve herleiten
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_e2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_w1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mit linsolve können wir nun unsere Angaben auflösen und erhalten:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lin_fx: linsolve([fx_e2, fx_w1, fx_s1], [c, b, a]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Daraus folgt, dass unsere Gleichung lautet:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(lin_fx, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+4.129
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Lineare Funktion
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir wissen wie eine Lineare Funktion aussieht und den Punkt [100|1240].
+Zudem ist der Wert f(0) = 1200.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s2: k*x + d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(0, x, fx_s2) = 1200;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie zu erwarten sind die 1200 das d wodurch wir einsetzten und auf k umformen können:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s2: subst(1200, d, fx_s2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_k: solve(subst(100, x, fx_s2) = 1240, k);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unsere Kostenfunktion K(x) ist also:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s2_loes: subst(fx_k, fx_s2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Preisfunktion
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s2_p: -x+100;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Erlösfunktion gibt sich aus der Preisfunktion mit x multipliziert.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s2_ex: ratsimp(fx_s2_p*x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Schnittpunkte
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Schnittpunkt ist die Gewinnschwelle, also ab wann man beginnt Geld zu bekommen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Maximaler Gewinn
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Für den Maximalen Gewinn brauchen wir das Maximum der Gewinnfunktion also die Ableitung.
+Diese gibt sich wiederum aus der Differenz von Preisfunktion und Kostenfunktion
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s2_g: fx_s2_ex - fx_s2_loes;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_s2_g_a1: diff(fx_s2_g, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(fx_s2_g_a1 = 0, x), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(248/5, x, fx_s2_loes), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(248/5, x, fx_s2_g), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Kurvendiskussion 3
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+4.30
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ein Fußballfeld ist [90-120]m lang und [45-90]m breit. 
+Rundherum soll eine Laufbahn mit [500]m Innenbahnlänge gebaut werden.
+Wir ermitteln bei welchen Abmessungen das Fußballfeld größtmögliche Fläche hat.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Für uns heißt dies, wir haben ein Rechteck mit [90-120]m Länge
+und einen Kreis mit [45-90]m Durchmesser.
+Die Summe aus Feldlänge * 2 + Kreisumfang ist also 500m.
+Daraus komme ich auf folgende Gleichung:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx1: 500 = 2*l + (b*%pi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Eine Seitenlänge beliebig
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Flächeninhalt des Feldes sollte Maximal sein,
+wenn eine Seite beliebig ist können wir daher eine der längsten Einsetzen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(120, l, fx1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b1: solve(subst(120, l, fx1)), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Das Ergebnis passt in die vorgegebene Breite und ist daher möglich.
+Dadurch, dass beide Werte so hoch wie möglich sind ist es auch die Größtmögliche Fläche.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A = b1*120;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Beide festegelegt
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Selbig wie oben, als Test wird noch der Maximalwert der Breite gewählt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(90, b, fx1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+l1: solve(subst(90, b, fx1), l), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A = l1*90;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie man sieht ist es auch möglich aber Kleiner
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+4.148
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: a*x^3+b*x^2+c*x+d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1: diff(fx, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a2: diff(fx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Maximum an [12, 3]
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Minimum ist der Abschusspunkt des Balles:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+0 = subst(0, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: subst(0, d, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_e2_a1: 0 = subst(0, x, fx_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: subst(0, c, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ich aktualisiere noch die Ableitungen:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1: diff(fx, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a2: diff(fx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun rechnen wir uns das Maximum aus:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_e1: 3 = subst(12, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_e1_a1: 0 = subst(3, x, fx_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lin_fx_e1: linsolve([fx_e1, fx_e1_a1], [a, b]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unsere Gleichung lautet also:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: subst(lin_fx_e1, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+10 Yard
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+1 Yard = 0.9144 Meter
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+10 * 0.9144;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unsere Höhe nach 10 Yard beträgt:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(9.144, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+f(x) = 2
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wo steht das Tor?
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(2 = fx, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Ball hinter Torlinie
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Das Auftreffen des Balles auf den Boden ist sein zweiter Extremwert, daher:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+x4: solve(fx = 0, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nur der erste Wert ist sinnvoll daher verwenden wir ihn weiter
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+x4[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Normalerweise würde man nun den zweiten Wert abziehe,
+da wir bei uns jedoch kein gutes Ergebnis bekommen würden lassen wir es jedoch mal.
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

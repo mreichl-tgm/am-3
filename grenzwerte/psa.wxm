@@ -1,0 +1,50 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+x0: 100;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1: x(t) = x0 * 3^(t/12);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg2: y(t) = x0/2 * 1.65^t;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg3: rhs(glg1) = rhs(glg2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([log(rhs(glg1)), log(rhs(glg2))], [t,0,3])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg4: f(n) = (-1)^n * n * sin(%pi/2 * n);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d((2*n^2+20+n)/(100*n^3), [n, -5, 5])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,308 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Portfolio 03 - Integralrechnung
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Numerische Integrationsverfahren
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Vorarbeit:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f1x: log(x)+2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a1: 2;
+b1: 5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Obersumme
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Erklärung
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Die Obersumme nähert sich dem Flächeninhalt eines Bereichs 
+unter einer Funktion, über der x-Achse an. 
+Dies geschieht über die Bildung von Rechtecken AUSSERHALB des Funktionsgraphen.
+Die Obersumme wird durch folgende Formel beschrieben:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+'An = (a-b)/n*sum(f(a+i/n*(a-b)), i, 1, n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([f1x], [x, 0, 10], [y, 0, 5]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Block
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+obersumme(f, a, b, n):= block
+(
+    float((a-b)/n*sum(subst((a+i*(a-b)/n), x, f), i, 1, n))
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Test
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_os: obersumme(f1x, a1, b1, 5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Untersumme
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Erklärung
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Entgegen der Obersumme wird hier die Fläche 
+mit Rechtecken INNERHALB der Funktion gebildet.
+Die Untersumme wird durch folgende Formel beschrieben:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+'An = (a-b)/n*sum(f(a+i/n*(a-b)), i, 0, n-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Block
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+untersumme(f, a, b, n):= block
+(
+    float((a-b)/n*sum(subst((a+i*(a-b)/n), x, f), i, 0, n-1))
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Test
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_us: untersumme(f1x, a1, b1, 5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Keppler'sche Fassregel
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Erklärung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bei Keppler'schen Fassregel handelt es sich um eine Methode um sich nicht-integrierbaren Funktionen anzunähern.
+Dazu wird zuerst eine Funktion gesucht welche der eigentlichen Funktion ähnelt. 
+Diese schneidet sich mit der ursprünglichen Funktion in mehreren Punkten, wir nehmen dazu in der Regel 3 an:
+Grenze a, Grenze b und Mitte (a+b)/2
+Der Punkte zu a und b bilden sich simpel als [a|f(a)] oder [b|f(b)], die Mitte ist folglich [(a+b)/2|f((a+b)/2)]
+Dadurch, dass wir die echte Funktion kennen haben wir nun auch mehr als genug Punkte für eine inverse Kurvendiskussion.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Beispiel
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Angabe
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: log(x)+2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+px: v*x^2+u*x+w;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: 2;
+b: 5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Kurvendiskussion
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Grafik
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+    [fx, px], [x, -10, 20], [y, -5, 5],
+    [legend, "f(x)", "p(x)"]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Block
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kepler(fx, a, b):= block(
+    (b-a)/6*(subst(a, x, fx) + 4*subst((a+b)/2, x, fx) + subst(b, x, fx))
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kepler(px, a, b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Simpsonregel
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Simpsonregel verwendet den keplerschen Formalismus und wendet diesen in Teilbereichen an, 
+welche dann wiederum aufsummiert werden können.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Angabe
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir verwenden die Angaben aus den letzten Aufgaben weiter:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: log(x)+2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: 2;
+b: 5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Erklärung + Grafik
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Grafik
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ga: [[a, subst(a, x, fx)], [a, 0]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gb: [[b, subst(b, x, fx)], [b, 0]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gab2: [[(a+b)/2, subst((a+b)/2, x, fx)], [(a+b)/2, 0]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+    [fx, [discrete, ga], [discrete, gb], [discrete, gab2]], [x, 1, 6], [y, 2, 4],
+    [legend, "f(x)", "a", "b", "(a+b)/2"]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Block
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+In der Simpson Funktion wird zusätzlich eine Kepler Funktion deklaiert um unabhängig auszuführen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+simpson(fx, a, b, nmax):=block(
+    kepler(fx, a, b):= block((b-a)/6*(subst(a, x, fx) + 4*subst((a+b)/2, x, fx) + subst(b, x, fx))),
+    sum(kepler(fx, a + (n-1)*(b-a)/nmax, a + n*(b-a)/nmax) , n, 1, nmax)
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie wir sehen erhalten wir einen deutlichen numerischen Wert:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+simpson(fx, a, b, 10), numer;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

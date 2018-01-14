@@ -1,0 +1,135 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+6.69
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: -1/4*x^3 + x^2 + 1/4*x;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1: diff(fx, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tx: 3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ty: subst(3, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tk: subst(3, x, fx_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+td: rhs(solve(ty = tk * tx + d, d)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t: tk * x + td;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b: rhs(solve(t = 0, x)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([fx, fx_a1, t], [x, -0.5, 5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V_fx1: %pi*integrate(fx^2, x, 0, 3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V_fx2: %pi*integrate(t^2, x, 3, b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V_ges: V_fx1 + V_fx2, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tx2: 4;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ty2: subst(4, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tk2: subst(4, x, fx_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+td2: rhs(solve(ty2 = tk2 * tx2 + d, d)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t2: tk2 * x + td2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b2: rhs(solve(t = 0, x)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V_fx2v2: %pi*integrate(t2^2, x, 3, b2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V_gesv2: V_fx1 + V_fx2v2, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V_ges / V_gesv2 * 100;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

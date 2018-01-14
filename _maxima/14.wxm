@@ -1,0 +1,95 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Numerische Verfahren zur Nullstellensuche
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Regular Falsi
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bsp.: 
+- f(x) ist stetig in [a, b]
+- sig(f(a)) != sig(f(b)]
+
+Daraus folgt, dass f(x) eine durchgehende Funktion ist,
+mit sowohl positiven als auch negativen Punkten.
+Die Funktion hat also eine Nullstelle welche es zu berechnen gilt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Einsetzen und x1 berechnen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir haben eine Funktion und 2 Werte welche wir bereits einsetzen können:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1(x):= log(x-1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: 2.5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b: 25;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die zuletzt im Unterricht hergeleitete Gleichung für x1 lässt sich gleich anwenden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg_x1: b - (f1(b)*(b-a))/(f1(b)-f1(a)) = x1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+float(lhs(glg_x1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun machen wir das ganze als Funktion in einem Block:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rf(a, b, f, n_max, e): block(
+    x: a,
+    n: 0
+    xn: lhs(glg_x1),
+    while (n < n_max) do (
+        xn: (f(b)*(b-x))/(f(b)-f(x)),
+        if xn less than e then return(xn)
+        )
+    return(n_max)
+    );
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rf(a, b, f1(x), 100, 1);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,40 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: 1/3*x^3-2*x^2+3*x;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_d1: diff(fx, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_d2: diff(fx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(fx_d1 = 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T: subst(1, x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([fx, T], [x, 0, 5]);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

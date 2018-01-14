@@ -1,0 +1,280 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+H10, Rechenoperationen, Variablenbelegung, Termvereinfachung    
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res1: ((71/30) - (101/18) + (419/45)) / ((14/15) + (8/3) + (4/9));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+float(res1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res2: ((5/4) / (4 + (22/7)) + (abs(-37/20))) * ((110/3) - (8/9));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+float(res2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res3: (((3 * (b^2)) / (4 * (a^4))^2) * ((2 * (a^3) / ((5 * b))^(-3)))) / ((-(15 * (b^2)) / 8 * (a^4))^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: 2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b: 3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+float((((3 * (b^2)) / (4 * (a^4))^2) * ((2 * (a^3) / ((5 * b))^(-3)))) / ((-(15 * (b^2)) / 8 * (a^4))^2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(a, b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res3_1: ((3 * b^2) / (4 * a^4))^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res3_2: ((2 * a^3) / (5 * b))^(-3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res3_3: -(((15 * b^2) / (8 * a^4))^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res3_b: res3_1 * res3_2 / res3_3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+float(res3_b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+(((x^2) + (4 * y^2)) / ((x^2) - (4 * y^2))) / ((x / (x - (2*y))) - ((2 * y) / x + (2 * y)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+x: 7.8;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y: 9.5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res4: (((x^2) + (4 * y^2)) / ((x^2) - (4 * y^2))) / ((x / (x - (2*y))) - ((2 * y) / x + (2 * y)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res5: ((2 * a) - 5)^3 - (100 * a) - (((2 * a) - 5)^2 * ((2*a) + 5) * (2 - (6 * a)) * (2 + (6 * a)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res5_1: (2 * a - 5)^3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res5_2: -100 * a;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res5_3: ((2 * a) - 5)^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res5_4: 2 * a - 5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res5_5: 2 - (6 * a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res5_6: 2 + (6 * a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res5_b: res5_1 + res5_2 - (res5_3 * res5_4 * res5_5 * res5_6);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res6_1: 33 * a * x^2 - (55 * b * x) + (77 * c * x^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+product(33 * a * x^2 - (55 * b * x) + (77 * c * x^2), k, 1, n);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res6_2: 4 * a * (a - (2 * b)) + ((4 * x) * (a - (2 * b)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res6_3: r^2 - (16 * r) + 64;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res6_4: 2 * a^2 - 18;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res7: (3 * k^4 - (15 * k) - (5 * k^2) - (2 * k^3)) / (-5 + (3 * k));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res7_1: divide((3 * k^4 - (15 * k) - (5 * k^2) - (2 * k^3)), (-5 + (3 * k)));
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

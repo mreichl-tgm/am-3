@@ -1,0 +1,512 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Portfolio02 - Kurvendiskussion
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Portfolio zur Kurvendiskussion inkl. benötigter Grundkompetenzen:
+- Näherungsverfahren
+    - Regula False
+    - Bisection
+    - Newton
+- Kurvendiskussion
+- Inverse Kurvendiskussion
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Als Vorgabe für unser Portfolio verwenden wir folgende Funktion:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: (x^2-1)*exp(x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Abgeleitet:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1: diff(fx, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a2: diff(fx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Grafisch:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([fx, fx_a1, fx_a2], [x, -4, 4], [y, -2, 2], [legend, "f(x)", "f'(x)", "f''(x)"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Näherungsverfahren
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Regula Falsi
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir verwenden den Block aus dem letzten Portfolio aufbauend weiter:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regulafalsi(a, b, f, e, max):=block
+(
+    xn: a - subst(a, x, f) * (b-a)/(subst(b, x, f) - subst(a, x, f)),
+    for i:1 thru max do 
+    (
+        /* Wenn f(x) > 0 wird b ersetzt */
+        if (subst(xn, x, f) > 0) then
+        (
+            xn: float(a - subst(a, x, f) * (xn-a)/(subst(xn, x, f) - subst(a, x, f)))
+        ),
+        /* Wenn f(x) < 0 wird a ersetzt */
+        if (subst(xn, x, f) < 0) then
+        (
+            xn: float(xn - subst(xn, x, f) * (b-xn)/(subst(b, x, f) - subst(xn, x, f)))
+        ),
+        /* Liefert die Nullstelle und die Iteration wenn gefunden */            
+        if (subst(xn, x, f) = 0) then return(["ns", i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Bisection
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir verwenden den Block aus dem letzten Portfolio aufbauend weiter:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisection(a, b, f, e, max):=block
+(
+    xn: (a + b)/2,
+    for i:1 thru max do
+    (
+        /* Wenn f(xn) < 0 wird der negative Wert ersetzt */
+        if (subst(xn, x, f) < 0) then
+        (
+            xn: float((xn + b)/2)
+      ),
+        /* Wenn f(xn) > 0 wird der positive Wert ersetzt */
+        if (subst(xn, x, f) > 0) then
+        (
+            xn: float((a + xn)/2)
+        ),
+        /* Wenn f(xn) = 0 wird f(xn) zurückgeliefert */
+        if (subst(xn, x, f) = 0) then return([i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Newton
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir verwenden den Block aus dem letzten Portfolio aufbauend weiter:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+newton(x0, f, f_a1, e, max):=block
+(
+    xn: x0 - subst(x0, x, f)/subst(x0, x, f_a1),
+    for i:1 thru max do 
+    (
+        /* xn wird eingesetzt, wenn f(xn) = 0 ist wird xn zurückgeliefert */
+        xn: xn - subst(x0, x, f)/subst(x0, x, f_a1),
+        if (subst(xn, x, f) = 0) then return(["ns", i, xn])
+    ),
+    /* Liefert +-e und xn wenn f(xn) in diesem Bereich liegt, 
+    ansonsten wird der Maximalwert und xn geliefert */
+    if (subst(xn, x, f) > -e) then return(["e", -e, xn]) else 
+    if (subst(xn, x, f) < e) then return(["e", +e, xn]) else 
+    return(["max", max, xn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Kurvendiskussion
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Definitionsmenge
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Polstellen oder Bereiche welche nicht definiert werden können müssen bestimmt werden.
+Bsp.: Division durch 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Symmetrie
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie zu sehen und auch Mathematisch beweisbar mittels f(x) = f(-x) und f(-x) = -f(x),
+ist die Funktion weder symmetrisch noch antisymmetrisch.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Nullstellen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nullstellen sind Punkte an denen der f(x) = 0 wird. 
+Diese erhalten wir also durch 0 setzen und Lösung der Gleichung,
+oder mit einem unserer Annäherungsverfahren, 
+bzw. find_root(), allroots() und newton() in wxMaxima.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Solve
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+n0: solve(fx = 0, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir erhalten 2 Nullstellen welche auch zutreffen, die Methode funktioniert.
+Die Punkte werden nun mit einem y von 0 als Variablen definiert.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+n1: [-1, 0];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+n2: [1, 0];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Polstellen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Polstellen sind Stellen an denen die Funktion nicht definiert ist.
+Von diesen haben wir jedoch aktuell keine in unserer Funktion.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Extremwerte
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Extremwerte sind die Nullstellen der ersten Ableitung, 
+welche wir wiederum durch diverse Methodiken bestimmen können.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+e0: solve(fx_a1 = 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Solve scheint erneut zu funktionieren also verwenden wir diese weiter.
+Diesmal muss jedoch erst der x Wert, an dem diese Nullstelle auftritt in f(x)
+eingesetzt werden um den y-Wert der Punkte zu erhalten.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+e1: [rhs(e0[1]), subst(rhs(e0[1]), x, fx)], numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+e2: [rhs(e0[2]), subst(rhs(e0[2]), x, fx)], numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Wendepunkte
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wendepunkte sind die Nullstellen der zweiten Ableitung,
+daher setzen wir diese 0 und bilden daraus wieder unsere Punkte.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w0: solve(fx_a2 = 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir erhalten wieder 2 Möglichkeiten was wie auch gut sehen können.
+Aus diesen holen wir nun noch den y Wert und bilden die Punkte.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w1: [rhs(w0[1]), subst(rhs(w0[1]), x, fx)], numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w2: [rhs(w0[2]), subst(rhs(w0[2]), x, fx)], numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Wendetangente
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Aus den Wendepunkten können jeweils noch Wendetangenten definiert werden.
+Dazu benötigt man die erste und zweite Ableitung (Wendepunkt).
+Sie ist linear und daher nach der Gleichung y = k*x + d aufgebaut.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+k -> Einsetzen des x-Wertes vom Wendepunkt in die erste Ableitung
+y -> Einsetzen des x-Wertes vom Wendepunkt
+d -> Umformen nach Einsetzen von y und k * Wendepunkt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Damit kann die Gleichung gebildet werden!
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1k: subst(w1[1], x, fx_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1y: subst(w1[1], x, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1d: rhs(solve(t1y = t1k * w1[1] + d, d)[1]), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1: t1k*x+t1d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun haben wir die erste Wendetangente, die zweite machen wir noch im Schnelldurchlauf.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t2k: subst(w2[1], x, fx_a1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t2d: rhs(solve(subst(w2[1], x, fx) = t2k*w2[1]+d, d)[1]), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t2: t2k*x+t2d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Darstellung der Funktion
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zuletzt können wir die Funktion grafisch mittles wxplot2d() darstellen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+    [
+        fx, fx_a1, fx_a2, t1, t2, 
+        [discrete, [n1, n2]], [discrete, [e1, e2]], [discrete, [w1, w2]]
+    ], [x, -4, 4], [y, -2, 2],
+    [
+        style, [lines], [lines], [lines], [lines], [lines],
+        [points, 1], [points, 1], [points, 1]
+    ],
+    [
+        legend, "f(x)", "f'(x)", "f''(x)", "Wendetangente 1", "Wendetangente 2",
+"Nullstellen", "Extremwerte", "Wendepunkte"
+    ]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Inverse Kurvendiskussion
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bei der inversen Kurvendiskussion sind bestimmte Punkte und Vorraussetzungen gegeben.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+- Funktion hat den Grad ... Liefert Grade der x Werte und somit die Stammfunktion
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+- Koeffizient von ...       Liefert einen Koeffizienten
+- Schneidet ...             Einsetzen in Stammfunktion
+- Symmetrisch               Koeffizienten ungerader Grade sind gleich 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+- Extremwert an ...         Einsetzen in erste Ableitung
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+- Wendepunkt an ...         Einsetzen in zweite Ableitung
+- Sattelpunkt an ...        Einsetzen in zweite Ableitung
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Beispiel welches nichts damit zu tun hat
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Flächeninhalt für das Trapez
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4_f:x^2*sin(v)*cos(v)+x*y*sin(v);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nebenbedingung
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4_n:b-y-2*x;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun rechnet man F:f+lamda*n
+Habe l für lamda in die Gleichung eingesetzt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4_F:a4_f+l*a4_n;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun hat man den Flächeninhalt in Abhängigkeit von x, y, v, l
+Nach diesen Variablen differenziert man nun und setzt gleich null
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4_fv:diff(a4_F, v, 1)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4_fl:diff(a4_F, l, 1)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4_fx:diff(a4_F, x, 1)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4_fy:diff(a4_F, y, 1)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Anschließend kann man sich mit den 4 Gleichungen x, y, v ausrechnen
+Maxima liefert hier aber kein Ergebnis zurück, wenn man es manuell ausrechnet kommt man auf das richtige Ergebnis
+Von Rechenweg ist es aber komplett richtig
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+algsys([a4_fv, a4_fl, a4_fx, a4_fy], [x, y, v]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+In das Ergebnis kann man dann noch die 80000 einsetzen und man hat das Ergebnis
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

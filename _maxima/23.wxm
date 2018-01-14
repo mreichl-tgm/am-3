@@ -1,0 +1,420 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+10er Logarithmus
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+log10(x):=log(x)/log(10)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+S23 - Logarithmus und Exponentialfunktion
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Gleichungen + Probe
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+a
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1a: 4^(3*x) + 23 * 3^(3*x) + 11 * 4^(3*x-2) = 3^(3*(x+1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1a_1: log(expand(glg1a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1a: solve(glg1a_1, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nach einigen Versuchen gescheitert, Problem unbekannt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+b
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Anschreiben der Gleichung unter Verwendung der selbstdefinierten Funktion log10(x)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1b: log10(x+3)+log10(2*x)=log10(x+9)+log10(2*x-4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Erweitern mit log(10) und vereinfachen durch ratsimp() zum leichteren rechnen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1b_1: log(10)*rhs(glg1b) = log(10)*lhs(glg1b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1b_2: ratsimp(glg1b_1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Exponentialfunktion anwenden um den Logarithmus loszuwerden
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1b_3: exp(rhs(glg1b_2)) = exp(lhs(glg1b_2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ergebnis durch solve()
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1b: solve(glg1b_3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Prüfen durch einsetzen, glg1b_3 war am leichtesten nachzurechnen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+prob1b: subst(loes1b, x, glg1b_3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beide Seiten liefern dasselbe Ergebnis -> Probe korrekt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+c
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1c: 2*log(x+3)-3*log(x+2)+log(x+1)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Logarithmus wird mit exp() aufgelöst
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1c_1: exp(lhs(glg1c)) = exp(rhs(glg1c));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir erhalten 2 Ergebnisse welche nun seperat voneinander getestet werden
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1c: solve(glg1c_1, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+prob1c_1: ratsimp(subst(rhs(loes1c[1]), x, glg1c_1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+prob1c_2: ratsimp(subst(rhs(loes1c[2]), x, glg1c_1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir erkennen, dass beie Ergebnisse stimmen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Textbeispiele
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+a
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Abschreiben der Funktion in der Angabe
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg2a: ut = U0*(1-exp(-(t/R * C)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Umformen auf R
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg2a_R: solve(glg2a, R)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Einsetzen und Berechnen von R
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes2a_R: subst(20*10^9, C, subst(15, U0, subst(11, ut, subst(3, t, glg2a_R))));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Probe durch Substitution und Gleichsetzen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+prob2a: subst(rhs(loes2a_R), R, glg2a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(20*10^9, C, subst(15, U0, subst(11, ut, subst(3, t, prob2a))));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+b
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Anschreiben der Funktion nach Angabe
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg2b: p = 10 * log10(P2/P1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Umformen auf P2
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg2b_P2: solve(glg2b, P2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Einsetzen und Berechnen von P2
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes2b_P2: subst(1, P1, subst(-10, p, glg2b_P2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+prob2b: subst(rhs(loes2b_P2[1]), P2, glg2b_P2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1, P1, subst(-10, p, prob2b));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Graphen Finden
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Hier hatte ich persönlich einige Probleme mit dem Finden der genauen Funktion.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+a
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Scheint einfach zu steigen, eventuell exponentiell bei logarithmierter Achse
+(e^x    ?)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+b
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+y-Achse wurde anscheinend logarithmiert.
+(-e^-x  ?)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+c
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Funktion nähert sich von 1 aus 0 an 
+(e^-x   ?)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Funktionen zeichnen
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+a
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+y-Achse logarithmisch
+x-Achse linear
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_4a: 4^(x/3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(fx_4a, [x, 0, 10], [logy], [grid2d]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Gleichung ist exponentiell und würde sich dadurch einem Wert annähern,
+wodurch man die eigentlichen Werte auf lange sicht nicht mehr erkennen kann.
+Durch Logarithmierung der y-Achse erscheint die Exponentialfunktion linear.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+b
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+x-Achse logarithmisch
+y-Achse linear
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_4b: 0.5*log(x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(fx_4b, [x, 0, 10], logx, grid2d);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Funktion ist logarithmisch, wodurch die Logarithmierung der x-Achse zur Folge hat,
+dass beide Achsen logarithmisch werden was sich insgesamt aufhebt und linear erscheint.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+c
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beide logarithmisch
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_4c: 1/x;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(fx_4c, [x, 0, 10], logx, logy, grid2d);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beide Achsen logarithmiert heben sich auf, jedoch besser den Anstieg auslesen.
+Dadurch, dass die Funktion gebrochen ist wirkt sie nun fallend.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+d
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beide logarithmisch
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_4d: 3/2 * x^(3/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(fx_4d, [x, 0, 10], logx, logy, grid2d);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie oben heben sich die logaithmischen Achsen auf und es bleibt die eigentliche Funktion.
+Exponentiell und gebrochen hebt sich hier auch auf, deshalb wirkt es wieder linear.
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

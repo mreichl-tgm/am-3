@@ -1,0 +1,117 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+2.SA 17.12.15   Markus Reichl   3AHIT
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Praxis a)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Grundformel für unser Wachstum:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+logistisch: r * y(t) * (G - y(t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+base: 0.000000025 * y(t) * (20000000 - y(t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+d_y: subst(5474579, y(t), base);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Praxis b)
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Japanische Krabben sind hier j(t), chinesische Krabben c(t)
+j(9) = j(0) * 2 -> j(t) = j(0) * 2^(t/9)
+c(0) = j(0) / 2 -> c(t) = j(0) / 2 * 1.7^t
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+c0: j(0) / 2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg_j: j(t) = j(0) * 2^(t/9);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg_c: c(t) = c0 * 1.7^t;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es handelt sich wie zu sehen ist bei beiden um Exponentielles Wachstum
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Formel zur bestimmung wann die Populationen gleich sind sollte durch gleichsetzen sichtbar werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg_same: rhs(glg_j) = rhs(glg_c);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Per Hand nachgerechnet:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg_same_ln: ln(j(0)) + t/9*ln(2) = ln(j(0)) + ln(1.7) * t - ln(2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes_same: solve(glg_same_ln, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unsere Populationen sind also gleich an loes_same
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([subst(5000, j(0), glg_j)], [x,-5,5])$
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

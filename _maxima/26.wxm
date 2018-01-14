@@ -1,0 +1,175 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S26 Aufgabe 4.160 im Buch
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Dem Text entnehmen wir:
+3ter Grad,
+Maximum [120, 32] in Meter, dies können wir also in die erste Ableitung und die Hauptfunktion einsetzen.
+Minimum ist logischerweise [0, 0] mit weiteren Minima an den Aufprallpunkten.
+
+Zusätzlich wissen wir, dass der Ball "waagrecht" startet. Daher: Er hat keine Steigung also erste Ableitung ist zuätzlich 0.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: a*x^3 + b*x^2 + c*x + d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1: diff(fx, x, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a2: diff(fx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Funktion ermitteln und Grafik zeichnen
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_start: subst(0, x, fx) = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1_start: subst(0, x, fx_a1) = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Damit wissen wir bereits, dass zwei Exponenten gleich 0 sind was wir erstmal substituieren können.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: subst(0, d, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: subst(0, c, fx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1: diff(fx, x, 1);
+fx_a2: diff(fx, x, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+In die neue Gleichung setzen wir nun die Maximalwerte ein und berechnen uns so a und b der Funktion.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_max: subst(120, x, fx) = 32;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a1_max: subst(120, x, fx_a1) = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_b: rhs(solve(rhs(solve(fx_max, a)[1]) = rhs(solve(fx_a1_max, a)[1]), b)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_a: rhs(solve(subst(fx_b, b, fx_max), a)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zuletzt setzen wir ein und kommen auf die finale Gleichung.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_loes: subst(fx_a, a, subst(fx_b, b, fx));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(fx_loes, [x, 0, 200], [legend, "Flugbahn"], [xlabel, "Abstand in m"], [ylabel, "Höhe in m"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Geplantes Ziel
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Das Loch befindet sich an der Position wo der Ball auf 27m Höhe ist.
+Wir wollen wissen wie weit der Ball von diesem Ziel entfernt aufkommt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_loch: solve(27 = fx_loes, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir bekommen 3 Ergebnisse von welchen jedoch nur einer sinnvoll ist.
+Die erste wird negativ und scheidet aus, die Zweite ist über dem Ziel, die Dritte sitzt jedoch ganz gut.
+Unser Loch liegt also auf 90 Metern.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun sehen wir noch wo der eigentliche Aufschlagpunkt ist. Dieser gehört an eine Nullstelle.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(0 = fx_loes, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die erste ist der Abschlag also bleibt nur die Zweite nach 180 Metern,
+das sind 90 Meter von unserem Ziel entfernt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Rand des Parkplatzes
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ähnlich wie eben nur suchen wir den Rand des Parkplatzes an 150 Metern, also umgekehrt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(150, x, fx_loes);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Ball erreicht das Ziel also nach 25 Metern.
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

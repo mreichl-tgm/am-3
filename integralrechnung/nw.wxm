@@ -1,0 +1,175 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Angewandte Mathematik - Fermentation
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+log10(x):= log(x)/log(10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Ermitteln der Wachstumsfunktion
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Aus unserer Angabe erhalten wir einige Werte welche für unser weiteres Vorgehen benötigt werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+N_0: 4375000;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+N_15: 24602433;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+N_25: 77799724;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Durch einsetzen in unsere Wachstumsfunktion können wir uns Lambda errechnen:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+l1: rhs(solve(log10(N_15) = log10(N_0) + l1*15, l1)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Dieses eingesetzt erhalten wir die für uns gültige Wachstumsfunktion:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+log_nt1: log10(N_0)+l1*t;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Ermitteln der Zerfallsfunktion
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wieder sind einige Werte gegeben und N(30) kann als Maximalwert (n_max) gesehen werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+N_max: 138349648;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+N_40: 132122888;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+N_50: 123304253;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir können uns zusätzlich T1 errechnen, was der Zeit zum Maximalbestand entspricht:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T1: rhs(solve(log10(N_max) = log10(N_0)+l1*T1, T1)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun holen wir uns Lambda 2 durch einsetzen und eliminieren von T2:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T2_40: rhs(solve(log10(N_40) = log10(N_max) + l2*(40-T2), T2)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T2_50: rhs(solve(log10(N_50) = log10(N_max) + l2*(50-T2), T2)[1]);;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+l2: rhs(solve(T2_40 = T2_50, l2)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Lamda eingesetzt können wir uns nun den echten Zeitpunkt T2 holen und einsetzen:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T2: rhs(solve(log10(N_50) = log10(N_max) + l2*(50-T2), T2)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+log_nt2: log10(N_max) + l2*(t-T2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Weiteres
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun haben wir gesammelt alle Werte:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+log_nt1, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+log_nt2, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+l1, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+l2, numer;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

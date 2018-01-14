@@ -1,0 +1,265 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+H11
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Ermitteln der Lösung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg1: (-4)*(1-(x/3))+(2/3)*(3-(x/5))-(x/3) = 5/45+((2/27)*(-1/4)+(x/2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes1: solve(glg1, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Probe (Links/Rechts)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(loes1, rhs(glg1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(loes1, lhs(glg1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Symbolisches Lösen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg2: (3*y) - ((5*y)*(y-3)) = (-17)*y+2-(y*(2-(3*y)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes2: solve(glg2, y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Numerisches Lösen + Probe
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes2, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(loes2, rhs(glg2)), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(loes2, lhs(glg2)), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+3, 5 und 7 stellige Genauigkeit
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bfloat(loes2), fpprec:4;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bfloat(loes2), fpprec:6;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bfloat(loes2), fpprec:8;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Numerisches Lösen + Probe
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg3_0: 15 * x - 3 = (12 * x) - (5 * y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg3_1: 3*x -6*y = x - y + 19;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes3: linsolve([glg3_0, glg3_1], [x, y]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(loes3, glg3_0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(loes3, glg3_1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Symbolisches und numerisches Lösen + Probe
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg4_0: x - 2*y + 3*z = 10;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg4_1: 7*x - 5*y + 6*z = 25;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg4_2: 3*x - 3*y + 4*z = 15;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes4: linsolve([glg4_0, glg4_1, glg4_2], [x, y, z]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes4_float: linsolve([glg4_0, glg4_1, glg4_2], [x, y, z]), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes4_x: solve(subst(loes4, glg4_0));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes4_y: solve(subst(loes4, glg4_1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes4_z: subst(loes4, glg4_2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Schnittpunkt numerisch
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg5_0: - 3*x - 4 = y;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+glg5_1: x = (4*(y-2))/3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes5_y: solve(glg5_1, y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+loes5: linsolve([glg5_0, glg5_1], [y, x]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Graph
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f(x) := -3*x - 4$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+g(x) := (8+3*x)/4$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([f, g], [x, -5, 5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Graph 1
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([f, g], [x, -10, 10], [color, red, black], [box, false], [grid2d, true], [title, "Graph2"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Graph 2
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([f, g], [x, -8, 8], [color, green, blue], [iterations, 5], [title, "Graph2"]);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

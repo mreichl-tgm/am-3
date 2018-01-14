@@ -1,0 +1,181 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Ermittlung der Wachstums- und Sterbekurve bei Fermentation
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+log10(x):= log(x)/log(10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T0: 0;
+T2: 40;
+N0: 4374000;
+N15: 24602433;
+N25: 77799724;
+N30: 138349648;
+N40: 132122888;
+N50: 123304253;
+Nmax: N30;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Ermitteln der Wachstumsfunktion
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: comment start ]
+N0 und die Grundfunktion erhalten wir aus der Angabe als 4374000
+Zusätzlich sind alle bekannten Werte für f(t) aufgelistet
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+nt1: N0+exp(l1*t);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Der Wert nach 15 Tagen (N15) wird in die Formel eingestzt, wodurch wir nach Lambda 1 auflösen können
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+l1_1: subst(15, t, nt1) = N15;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+l1_1: rhs(log(l1_1-4374000)/15);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Diesen setzen wir nun wieder in die Wachstumsgleichung ein
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+nt1: subst(l1_1, l1, nt1), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Ermitteln der Zerfallsfunktion
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: comment start ]
+Nmax kann aus dem Text als T30 ablesen,
+dadurch können wir die Zerfallsformel bilden
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+nt2: Nmax-exp(l2*(t-T2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Ich verwende hier 2 gegebene Werte um mir Lambda herzuleiten
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+l2_N50: log(((N50 = subst(50, t, nt2)) - 123304253 - 15045395)*(-1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Dadurch, dass 0 kein sonderlich praktischer Wert für ein Lambda ist nehme ich stark den Wert 1 an
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+l2_1: rhs(solve(l2_N50, l2)[1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Diesen setzen wir nun wieder in die Formel ein
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+nt2: subst(l2_1, l2, nt2), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Zusammenfassung + Plot
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Dieser wird wieder eingebeut und wir bleiben mit 2 Formeln:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+nt1;
+nt2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zur Veranschaulichung differenzieren wir noch:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+nt1_a1: diff(nt1, t, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+nt2_a1: diff(nt2, t, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([nt1, nt2, nt1_a1, nt2_a1, 
+        [discrete, [[30, N30], [50, N30]]]
+    ], 
+    [t, 0, 60], [y, 0, Nmax*1.1], 
+    [legend, 
+        "n(t) Wachsend", "n(t) Fallend", "n'(t) Wachsend", "n'(t) Fallend", 
+        "Stagnierend"
+    ]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([log10(nt1), log10(nt2)],
+    [t, 0, 60], [y, 5, 10], 
+    [legend, 
+        "log10(n(t)) Wachsend", "log10(n(t)) Fallend"
+    ]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Weitere Fragen
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Extremwerte?
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Aufgrund des exponentiellen Wachstums, bzw. Zerfalls werden wir nie eine eindeutige
+Grenze für Maximal und Extremwerte bekommen. 
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

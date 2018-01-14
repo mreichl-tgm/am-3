@@ -1,0 +1,130 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Keppler'sche Fassregel
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Erklärung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bei Keppler'schen Fassregel handelt es sich um eine Methode um sich nicht-integrierbaren Funktionen anzunähern.
+Dazu wird zuerst eine Funktion gesucht welche der eigentlichen Funktion ähnelt. 
+Diese schneidet sich mit der ursprünglichen Funktion in mehreren Punkten, wir nehmen dazu in der Regel 3 an:
+Grenze a, Grenze b und Mitte (a+b)/2
+Der Punkte zu a und b bilden sich simpel als [a|f(a)] oder [b|f(b)], die Mitte ist folglich [(a+b)/2|f((a+b)/2)]
+Dadurch, dass wir die echte Funktion kennen haben wir nun auch mehr als genug Punkte für eine inverse Kurvendiskussion.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Beispiel
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Angabe
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx: log(x)+2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+px: v*x^2+u*x+w;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a: 2;
+b: 5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Kurvendiskussion
+   [wxMaxima: subsect end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: subsubsect start ]
+Gleichungssystem aufstellen und lösen
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_a: subst(a, x, px) = subst(a, x, fx);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_b: subst(b, x, px) = subst(b, x, fx);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_ab: subst((a+b)/2, x, px) = subst((a+b)/2, x, fx);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_uvw: linsolve([fx_a, fx_b, fx_ab], [u, v, w]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_u: rhs(fx_uvw[1]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_v: rhs(fx_uvw[2]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fx_w: rhs(fx_uvw[3]), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+px:subst(fx_w, w, subst(fx_v, v, subst(fx_u, u, px)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Grafik
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+    [fx, px], [x, -10, 20], [y, -5, 5],
+    [legend, "f(x)", "p(x)"]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Block
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kepler(fx, a, b):= block(
+    (b-a)/6*(subst(a, x, fx) + 4*subst((a+b)/2, x, fx) + subst(b, x, fx))
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Test
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kepler(px, a, b);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
